@@ -12,7 +12,8 @@ function Transfer({ address, setBalance, privateKey }) {
 
   async function transfer(evt) {
     evt.preventDefault();
-    const msgHash = toHex(keccak256(utf8ToBytes("hello")));
+    let msg = { sender: address, recipient, amount: parseInt(sendAmount)}
+    const msgHash = toHex(keccak256(utf8ToBytes(JSON.stringify(msg))));
     const sign = await secp.sign(msgHash,privateKey);
     console.log("issigned",secp.verify(sign,msgHash,address),sign);
     try {
